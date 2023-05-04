@@ -1,5 +1,6 @@
 import { combineReducers, configureStore, createSlice } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
+import { Movie } from "./types";
 
 interface MoviesState {
   searchQuery: string;

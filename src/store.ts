@@ -53,6 +53,31 @@ export const {
   selectMovie,
 } = moviesSlice.actions;
 
+export const fetchMovies = (searchQuery: string) => async (dispatch: any) => {
+  try {
+    dispatch(searchMoviesStart(searchQuery));
+    const response = await fetch(
+      `https://swapi.dev/api/films/?search=${searchQuery}`
+    );
+    if (!response.ok) {
+      throw new Error("Error fetching movies from the API");
+    }
+    const data = await response.json();
+    const movies = data.results.map((movie: any) => {
+      const { title, director, release_date, opening_crawl } = movie;
+      return { title, director, release_date, opening_crawl };
+    });
+    dispatch(searchMoviesSuccess(movies));
+  } catch (error: any) {
+    dispatch(searchMoviesFailure(error.message));
+  }
+};
+
+export const selectMovieAndFetchDetails =
+  (movie: Movie) => async (dispatch: any) => {
+    dispatch(selectMovie(movie));
+  };
+
 const rootReducer = combineReducers({
   movies: moviesSlice.reducer,
 });

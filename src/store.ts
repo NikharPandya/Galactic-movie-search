@@ -1,4 +1,9 @@
-import { combineReducers, configureStore, createSlice } from "@reduxjs/toolkit";
+import {
+  combineReducers,
+  configureStore,
+  createSlice,
+  PayloadAction,
+} from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import { Movie } from "./types";
 
@@ -35,8 +40,18 @@ const moviesSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    selectMovie(state, action: PayloadAction<Movie>) {
+      state.selectedMovie = action.payload;
+    },
   },
 });
+
+export const {
+  searchMoviesStart,
+  searchMoviesSuccess,
+  searchMoviesFailure,
+  selectMovie,
+} = moviesSlice.actions;
 
 const rootReducer = combineReducers({
   movies: moviesSlice.reducer,

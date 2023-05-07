@@ -4,7 +4,7 @@ import {
   createSlice,
   PayloadAction,
 } from "@reduxjs/toolkit";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
 import { Movie } from "./types";
 
 interface MoviesState {
@@ -27,16 +27,16 @@ const moviesSlice = createSlice({
   name: "movies",
   initialState,
   reducers: {
-    searchMoviesStart(state, action) {
+    searchMoviesStart(state, action: PayloadAction<string>) {
       state.searchQuery = action.payload;
       state.loading = true;
       state.error = null;
     },
-    searchMoviesSuccess(state, action) {
-      state.searchQuery = action.payload;
+    searchMoviesSuccess(state, action: PayloadAction<Movie[]>) {
+      state.results = action.payload;
       state.loading = false;
     },
-    searchMoviesFailure(state, action) {
+    searchMoviesFailure(state, action: PayloadAction<string>) {
       state.loading = false;
       state.error = action.payload;
     },
@@ -90,3 +90,4 @@ export default store;
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch = () => useDispatch<AppDispatch>();
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

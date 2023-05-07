@@ -1,12 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../index.css";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { useAppDispatch } from "../store";
-import { searchMoviesStart } from "../store";
+import { fetchMovies, searchMoviesStart } from "../store";
 
 const SearchForm: React.FC = () => {
   const dispatch = useAppDispatch();
-  const [searchQuery, setSearchQuery] = useState<string>(" ");
+  const [searchQuery, setSearchQuery] = useState<string>("");
+
+  useEffect(() => {
+    if (searchQuery) {
+      dispatch(fetchMovies(searchQuery));
+    }
+  }, [dispatch, searchQuery]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

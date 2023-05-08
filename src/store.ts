@@ -31,6 +31,12 @@ const moviesSlice = createSlice({
       state.searchQuery = action.payload;
       state.loading = true;
       state.error = null;
+      state.results = state.results.filter((movie: any) => {
+        return (
+          movie.title.charAt(0).toLowerCase() ===
+          action.payload.charAt(0).toLowerCase()
+        );
+      });
     },
     searchMoviesSuccess(state, action: PayloadAction<Movie[]>) {
       state.results = action.payload;
@@ -63,10 +69,14 @@ export const fetchMovies = (searchQuery: string) => async (dispatch: any) => {
       throw new Error("Error fetching movies from the API");
     }
     const data = await response.json();
-    const movies = data.results.map((movie: any) => {
-      const { title, director, release_date, opening_crawl } = movie;
-      return { title, director, release_date, opening_crawl };
-    });
+    const movies = data.results
+      .filter((movie: any) =>
+        movie.title.toLowerCase().startsWith(searchQuery.toLowerCase())
+      )
+      .map((movie: any) => {
+        const { title, director, release_date, opening_crawl } = movie;
+        return { title, director, release_date, opening_crawl };
+      });
     dispatch(searchMoviesSuccess(movies));
   } catch (error: any) {
     dispatch(searchMoviesFailure(error.message));

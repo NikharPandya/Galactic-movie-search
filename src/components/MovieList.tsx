@@ -20,7 +20,7 @@ const MovieList: React.FC = () => {
       <>
         <div className="container mx-auto w-screen flex justify-center">
           <ul className="w-3/4">
-            <li className="h-10 bg-slate-200 p-2 text-slate-700 hover:text-slate-400">
+            <li className="h-10 bg-blue-950 p-2 text-zinc-300 hover:text-blue-500">
               {" "}
               Loading...
             </li>
@@ -34,7 +34,7 @@ const MovieList: React.FC = () => {
       <>
         <div className="container mx-auto w-screen flex justify-center">
           <ul className="w-3/4">
-            <li className="h-10 bg-slate-200 p-2 text-slate-700 hover:text-slate-400">
+            <li className="h-10 bg-blue-950 p-2 text-zinc-300 hover:text-blue-500">
               {error}
             </li>
           </ul>
@@ -45,10 +45,10 @@ const MovieList: React.FC = () => {
   return (
     <>
       <div className="container mx-auto w-screen flex justify-center">
-        <ul className="w-3/4">
+        <ul className="w-4/5 mx-2">
           {results.map((movie: Movie) => (
             <li
-              className="flex items-center group gap-2 pl-2 h-10 bg-slate-200 m-2 text-slate-950 hover:text-blue-500 group-hover:outline group-hover:outline-slate-700 group-hover:outline-3 rounded "
+              className="flex items-center group gap-2 pl-2 h-10 bg-blue-950 m-2 text-zinc-300 hover:text-blue-500 group-hover:outline rounded "
               key={movie.title}>
               <LinkIcon className="h-4 w-4 group-hover:scale-1 group-hover:text-blue-500 group-hover:-translate-y-1 group-hover:transition" />
               <Link

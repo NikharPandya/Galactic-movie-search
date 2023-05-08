@@ -41,7 +41,7 @@ const SearchForm: React.FC = () => {
   );
 
   return (
-    <div className="h-40 w-screen p-6">
+    <div className="md:h-40 h-30 w-screen p-6">
       <form onSubmit={handleSubmit} className="flex justify-center gap-4">
         <input
           className="input input-bordered w-full max-w-xs focus:border-1 bg-blue-950 focus:border-slate-200 placeholder:opacity-90 text-slate-200 hover:placeholder:text-slate-50"

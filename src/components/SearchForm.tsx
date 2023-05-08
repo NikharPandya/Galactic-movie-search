@@ -14,6 +14,7 @@ const SearchForm: React.FC = () => {
     }
   }, [dispatch, searchQuery]);
 
+  // When the search query is changed the submission callback will dispatch the reducer
   const handleSubmit = useCallback(
     (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
@@ -22,13 +23,14 @@ const SearchForm: React.FC = () => {
     [dispatch, searchQuery]
   );
 
+  // Sets the typed value to the search query
   const onHandleChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       setSearchQuery(event.target.value);
     },
     []
   );
-
+  //  When the user presses enter the search reducers is dispatched
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent<HTMLInputElement>) => {
       if (event.key === "Enter") {

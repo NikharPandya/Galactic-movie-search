@@ -6,7 +6,7 @@ import {
 } from "@reduxjs/toolkit";
 import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
 import { Movie } from "./types";
-
+//  Declared MovieState interface types
 interface MoviesState {
   searchQuery: string;
   results: Movie[];
@@ -14,6 +14,8 @@ interface MoviesState {
   loading: boolean;
   error: string | null;
 }
+
+// Declared Initial State
 
 const initialState: MoviesState = {
   searchQuery: "",
@@ -23,10 +25,12 @@ const initialState: MoviesState = {
   error: null,
 };
 
+// Created readux slice with reducer functions
 const moviesSlice = createSlice({
   name: "movies",
   initialState,
   reducers: {
+    // Starts searching for the movie
     searchMoviesStart(state, action: PayloadAction<string>) {
       state.searchQuery = action.payload;
       state.loading = true;
@@ -38,14 +42,17 @@ const moviesSlice = createSlice({
         );
       });
     },
+    // Changes the state to movie details
     searchMoviesSuccess(state, action: PayloadAction<Movie[]>) {
       state.results = action.payload;
       state.loading = false;
     },
+    // If the serch fails to load the movie
     searchMoviesFailure(state, action: PayloadAction<string>) {
       state.loading = false;
       state.error = action.payload;
     },
+    // When individial movie is selected
     selectMovie(state, action: PayloadAction<Movie>) {
       state.selectedMovie = action.payload;
     },
@@ -59,6 +66,7 @@ export const {
   selectMovie,
 } = moviesSlice.actions;
 
+//  Fetch data from the api
 export const fetchMovies = (searchQuery: string) => async (dispatch: any) => {
   try {
     dispatch(searchMoviesStart(searchQuery));
@@ -83,15 +91,17 @@ export const fetchMovies = (searchQuery: string) => async (dispatch: any) => {
   }
 };
 
+// When individual movie is selected and ask for details to display
 export const selectMovieAndFetchDetails =
   (movie: Movie) => async (dispatch: any) => {
     dispatch(selectMovie(movie));
   };
-
+// Combined Reducers
 const rootReducer = combineReducers({
   movies: moviesSlice.reducer,
 });
 
+// Configured Store
 const store = configureStore({
   reducer: rootReducer,
 });

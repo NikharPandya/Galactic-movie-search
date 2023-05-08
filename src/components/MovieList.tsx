@@ -10,6 +10,7 @@ const MovieList: React.FC = () => {
   const dispatch = useAppDispatch();
   const { results, loading, error } = useAppSelector((state) => state.movies);
 
+  // serves details of selected movie when clicked
   const handleMovieClick = (movie: Movie) => {
     dispatch(selectMovieAndFetchDetails(movie));
     navigate(`/${movie.title.toLowerCase().replaceAll(" ", "-")}`);
